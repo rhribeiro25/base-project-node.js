@@ -8,10 +8,10 @@ export const signUpPath = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/schemas/signUpParams'
-          }
-        }
-      }
+            $ref: '#/schemas/signUpParams',
+          },
+        },
+      },
     },
     responses: {
       200: {
@@ -19,23 +19,23 @@ export const signUpPath = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/schemas/account'
-            }
-          }
-        }
+              $ref: '#/schemas/account',
+            },
+          },
+        },
       },
       400: {
-        $ref: '#/components/badRequest'
+        $ref: '#/components/badRequest',
       },
       403: {
-        $ref: '#/components/forbidden'
+        $ref: '#/components/forbidden',
       },
       404: {
-        $ref: '#/components/notFound'
+        $ref: '#/components/notFound',
       },
       500: {
-        $ref: '#/components/serverError'
-      }
-    }
-  }
-}
+        $ref: '#/components/serverError',
+      },
+    },
+  },
+};

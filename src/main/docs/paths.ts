@@ -1,9 +1,6 @@
-import {
-  loginPath,
-  signUpPath
-} from './paths/'
+import { loginPath, signUpPath } from './paths/';
 
 export default {
   '/login': loginPath,
-  '/signup': signUpPath
-}
+  '/signup': signUpPath,
+};

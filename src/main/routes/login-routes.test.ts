@@ -1,25 +1,27 @@
-import app from '@/main/config/app'
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
-import { Collection } from 'mongodb'
-import { hash } from 'bcrypt'
-import request from 'supertest'
-import CollectionNames from '@/main/config/collection-names'
+import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
+import app from '@/main/config/app';
+import CollectionNames from '@/main/config/collection-names';
+import { hash } from 'bcrypt';
+import { Collection } from 'mongodb';
+import request from 'supertest';
 
-let accountCollection: Collection
+let accountCollection: Collection;
 
 describe('Login Routes', () => {
   beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
-  })
+    await MongoHelper.connect(process.env.MONGO_URL);
+  });
 
   afterAll(async () => {
-    await MongoHelper.disconnect()
-  })
+    await MongoHelper.disconnect();
+  });
 
   beforeEach(async () => {
-    accountCollection = await MongoHelper.getCollection(CollectionNames.account)
-    await accountCollection.deleteMany({})
-  })
+    accountCollection = await MongoHelper.getCollection(
+      CollectionNames.account
+    );
+    await accountCollection.deleteMany({});
+  });
 
   describe('POST /signup', () => {
     test('Should return 200 on signup', async () => {
@@ -29,46 +31,46 @@ describe('Login Routes', () => {
           name: 'Rodrigo',
           email: 'rodrigo.manguinho@gmail.com',
           password: '123',
-          passwordConfirmation: '123'
+          passwordConfirmation: '123',
         })
-        .expect(200)
+        .expect(200);
       await request(app)
         .post('/api/signup')
         .send({
           name: 'Rodrigo',
           email: 'rodrigo.manguinho@gmail.com',
           password: '123',
-          passwordConfirmation: '123'
+          passwordConfirmation: '123',
         })
-        .expect(403)
-    })
-  })
+        .expect(403);
+    });
+  });
 
   describe('POST /login', () => {
     test('Should return 200 on login', async () => {
-      const password = await hash('123', 12)
+      const password = await hash('123', 12);
       await accountCollection.insertOne({
         name: 'Rodrigo',
         email: 'rodrigo.manguinho@gmail.com',
-        password
-      })
+        password,
+      });
       await request(app)
         .post('/api/login')
         .send({
           email: 'rodrigo.manguinho@gmail.com',
-          password: '123'
+          password: '123',
         })
-        .expect(200)
-    })
+        .expect(200);
+    });
 
     test('Should return 401 on login', async () => {
       await request(app)
         .post('/api/login')
         .send({
           email: 'rodrigo.manguinho@gmail.com',
-          password: '123'
+          password: '123',
         })
-        .expect(401)
-    })
-  })
-})
+        .expect(401);
+    });
+  });
+});
